@@ -8,6 +8,7 @@ import About from './components/About/About'
 import Signup from './components/Signup/Signup'
 import { AuthProvider } from './components/context/authContext'
 import { ToastContainer, toast } from 'react-toastify';
+import Loby from './components/videoCall/loby'
 const App = () => {
   return (
     <div>
@@ -19,6 +20,7 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/:loby' element={<Loby />} />
       </Routes>
       </AuthProvider>
     </div>
