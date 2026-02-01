@@ -8,7 +8,9 @@ const HomePage = () => {
     <div className="bg-black overflow-x-hidden">
       <NavBar />
       <div className="bg-black h-[84.5vh] w-screen flex gap-2 items-center justify-center p-4 font-gilroy">
+        
         <div className="h-full w-[48%] p-2 flex flex-col gap-4">
+  
           <h1 className="text-7xl font-semibold capitalize bg-linear-to-r from-blue-600 to-[#e7bd3e] bg-clip-text text-transparent">
             We Help students connect with their right mentors.
           </h1>
