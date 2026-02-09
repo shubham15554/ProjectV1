@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import './HomePage.css';
+import BookingSummaryCard from "../BookingSummaryCard/BookingSummaryCard";
 
 const HomePage = () => {
   return (
