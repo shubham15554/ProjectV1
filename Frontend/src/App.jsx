@@ -7,11 +7,9 @@ import SignIn from './components/SIgnIn/SignIn'
 import About from './components/About/About'
 import Signup from './components/Signup/Signup'
 import { AuthProvider } from './components/context/authContext'
-<<<<<<< HEAD
-import { ToastContainer, toast } from 'react-toastify';
-import Loby from './components/videoCall/loby'
-=======
 import { ToastContainer } from 'react-toastify';
+import Loby from './components/videoCall/loby'
+
 import 'react-toastify/dist/ReactToastify.css';
 
 // Create a Mentors page component
@@ -79,22 +77,10 @@ const Mentors = () => {
   );
 };
 
->>>>>>> 2bcb36ffc0d8b14edea063d372c3393c0fadc5ad
 const App = () => {
   return (
     <div>
       <AuthProvider>
-<<<<<<< HEAD
-      <ToastContainer/>
-      <Routes>
-        <Route path='/' element={<HomePage />} />
-        <Route path='/mentors' element={<Mentor />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/signin' element={<SignIn />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/:loby' element={<Loby />} />
-      </Routes>
-=======
         <ToastContainer />
         <Routes>
           <Route path='/' element={<HomePage />} />
@@ -102,8 +88,9 @@ const App = () => {
           <Route path='/about' element={<About />} />
           <Route path='/signin' element={<SignIn />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/loby' element={<Loby />} />
+          
         </Routes>
->>>>>>> 2bcb36ffc0d8b14edea063d372c3393c0fadc5ad
       </AuthProvider>
     </div>
   )

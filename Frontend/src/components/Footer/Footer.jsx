@@ -4,33 +4,39 @@ import 'remixicon/fonts/remixicon.css'
 
 const Footer = () => {
   return (
-    <div>
-      <div className="flex items-center justify-between mb-5">
-        <div className="flex items-center justify ">
+    <footer className="w-full border-t border-gray-800 mt-10">
+      <div className="flex flex-col md:flex-row items-center justify-between py-6 px-4 md:px-10 gap-8 md:gap-0">
+        
+        {/* Logo Section */}
+        <div className="flex items-center justify-center">
           <NavLink className="flex items-center justify-center" to="/">
             <img
-              className="h-30 w-30 "
+              className="h-20 w-20 md:h-30 md:w-30" // Mobile par thoda chota kiya
               src="../../src/assets/Images/sellogo.png"
-              alt=""
+              alt="Logo"
             />
-            <h1 className="text-[#031b38] text-3xl font-bold">
+            <h1 className="text-[#031b38] text-2xl md:text-3xl font-bold">
               Lex
-              <span className="text-[#dbaa2f] textl-3xl font-semibold">
+              <span className="text-[#dbaa2f] font-semibold">
                 Bridge
               </span>
             </h1>
           </NavLink>
         </div>
-        <div className="text-white p-10 text-l text-center">
+
+        {/* Copyright - Mobile par p-10 hata kar responsive kiya */}
+        <div className="text-white text-sm md:text-l text-center">
           <p>Copyright @2026 LEXBRIDGE Pvt.Ltd.<br/> All rights Reserved.</p>
         </div>
-        <div className="text-white pr-8 flex gap-6">
-            <NavLink><i class="ri-instagram-line"></i></NavLink>
-            <NavLink><i class="ri-facebook-circle-fill"></i></NavLink>
-            <NavLink><i class="ri-twitter-x-line"></i></NavLink>
+
+        {/* Social Icons */}
+        <div className="text-white flex gap-8 text-2xl">
+            <NavLink to="#"><i className="ri-instagram-line"></i></NavLink>
+            <NavLink to="#"><i className="ri-facebook-circle-fill"></i></NavLink>
+            <NavLink to="#"><i className="ri-twitter-x-line"></i></NavLink>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 
