@@ -30,7 +30,15 @@ const NavBar = () => {
           to="/mentors"
         >
           Mentors
+        </NavLink><NavLink
+          className={({ isActive }) =>
+            `text-l font-semibold ${isActive ? `text-[#0e3e79]` : `text-white`}`
+          }
+          to="/myBookings"
+        >
+          My Bookings
         </NavLink>
+
         <NavLink
           className={({ isActive }) =>
             `text-l font-semibold ${isActive ? `text-[#0e3e79]` : `text-white`}`

@@ -9,8 +9,9 @@ export const booking = async (req , res) => {
     try{
      console.log("booking req is coming");
      let formData = req.body;
-     
+     console.log(formData);
      let newSession = new Session(formData);
+
      await newSession.save();
      console.log(newSession);
      res.json({message : "Booking confirmed"});

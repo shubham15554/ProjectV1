@@ -3,7 +3,8 @@ const { Schema } = mongoose;
 
 const sessionSchema = new Schema({   
 
-
+  // studentId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  // mentorId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   plan: { type: String, enum: ["chat", "video"]}, 
 
   startTime: { type: Date, },        
@@ -18,7 +19,7 @@ const sessionSchema = new Schema({
 
   price: { type: Number },          
   message: { type: String },       
-
+  date: {type : Date},
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

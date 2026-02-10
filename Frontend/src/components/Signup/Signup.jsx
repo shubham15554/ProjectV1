@@ -13,7 +13,8 @@ const SignIn = () => {
   let [password , setPassword] = useState();
   
 
-  let {handleRegister} = useContext(AuthContext);
+  let {handleRegister } = useContext(AuthContext);
+  
   
 
   const handleOnClick = async (e)=>{

@@ -1,3 +1,4 @@
+
 import User from "../models/user.js";
 import { createSecretToken } from "../utils/createToken.js";
 import bcrypt from "bcrypt";
@@ -75,3 +76,20 @@ export const login = async (req , res)=>{
         res.status(500).json({ message: "Server error", error });
     }
 }
+
+
+export const checkAuth = ("/checkAuth", (req, res) => {
+
+  console.log("verify req is coming"+ req.cookies);
+  if (req.cookies?.token) {
+    // optionally verify the token
+    return res.json({ authenticated: true });
+  }
+  res.json({ authenticated: false });
+});
+
+
+
+
+
+

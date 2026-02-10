@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { MessageSquare, Video, Star, Award, Clock, X, Calendar as CalendarIcon } from 'lucide-react';
-
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { AuthContext } from '../context/authContext';
+import { useContext } from 'react';
 // Standalone Avatar Component
 const Avatar = ({ src, alt, fallback, className = "" }) => (
   <div className={`relative flex shrink-0 overflow-hidden rounded-full ${className}`}>
@@ -193,6 +196,10 @@ const SimpleCalendar = ({ selected, onSelect }) => {
 
 // Booking Modal Component (Embedded)
 const BookingModal = ({ isOpen, onClose, mentor, selectedPlan }) => {
+
+  let {user} = useContext(AuthContext);
+  console.log(user);
+  console.log(selectedPlan);
   const [date, setDate] = useState(new Date());
   const [formData, setFormData] = useState({
     name: '',
@@ -200,19 +207,31 @@ const BookingModal = ({ isOpen, onClose, mentor, selectedPlan }) => {
     phone: '',
     message: '',
     timeSlot: '',
+    
   });
-
-  const handleSubmit = (e) => {
+  console.log("mentor ka naam"+mentor);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Booking submitted:', {
-      mentor: mentor.name,
-      plan: selectedPlan,
-      date,
-      ...formData,
-    });
-    alert(`Booking request sent to ${mentor.name}!\nPlan: ${selectedPlan === 'chat' ? 'Chat Session' : 'Video Call'}\nWe'll confirm your session shortly.`);
+    console.log(formData);
+    let res = await axios.post('http://localhost:8000/session/booking' , formData);
+    console.log(res.data.message);
+    toast(res.data.message , {theme: "dark"});
+    
     onClose();
   };
+
+  const handleDateSelect = (selectedDate) => {
+  const localDate = selectedDate.toLocaleDateString("en-CA"); 
+
+  setDate(selectedDate);
+
+  setFormData(prev => ({
+    ...prev,
+    date: localDate, // backend-friendly
+  }));
+
+
+ };
 
   const handleInputChange = (e) => {
     setFormData({
@@ -339,7 +358,7 @@ const BookingModal = ({ isOpen, onClose, mentor, selectedPlan }) => {
                   <CalendarIcon className="w-4 h-4" />
                   Choose Date
                 </label>
-                <SimpleCalendar selected={date} onSelect={setDate} />
+                <SimpleCalendar selected={date} onSelect={handleDateSelect}/>
               </div>
 
               <div className="space-y-2">

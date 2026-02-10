@@ -2,7 +2,7 @@ import React from 'react'
 import NavBar from '../NavBar/NavBar'
 import { useNavigate } from 'react-router-dom'
 import './Mentors.css'
-
+import withAuth from '../utils/withAuth'
 const Mentor = () => {
   const Navigate = useNavigate();
   return (
@@ -20,4 +20,4 @@ const Mentor = () => {
   )
 }
 
-export default Mentor
+export default withAuth(Mentor);
