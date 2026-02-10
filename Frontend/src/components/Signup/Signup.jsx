@@ -10,13 +10,9 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-<<<<<<< HEAD
   let {handleRegister } = useContext(AuthContext);
   
   
-=======
-  const { handleRegister } = useContext(AuthContext);
->>>>>>> eefa2779cadc30939e256c7ea40fa0be8f01922c
 
   const handleOnClick = async (e) => {
     try {
