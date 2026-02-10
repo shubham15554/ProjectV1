@@ -1,116 +1,132 @@
-import React from "react";
-import { useState } from "react";
-import {NavLink} from 'react-router-dom'
-import axios from 'axios';
+import React, { useState, useContext } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext.jsx";
-import { useContext } from "react";
 import { toast } from "react-toastify";
-const SignIn = () => {
-  
+import 'remixicon/fonts/remixicon.css';
 
-  let [username , setUserName] = useState();
-  let [email , setEmail] = useState();
-  let [password , setPassword] = useState();
-  
+const SignUp = () => {
+  const navigate = useNavigate();
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
+<<<<<<< HEAD
   let {handleRegister } = useContext(AuthContext);
   
   
+=======
+  const { handleRegister } = useContext(AuthContext);
+>>>>>>> eefa2779cadc30939e256c7ea40fa0be8f01922c
 
-  const handleOnClick = async (e)=>{
-     
-    try{
+  const handleOnClick = async (e) => {
+    try {
       e.preventDefault();
-      let msg = await handleRegister(username , email , password);
-      console.log(msg);
-      toast(msg , {theme: "dark"});
-    }
-    catch(e){
+      let msg = await handleRegister(username, email, password);
+      toast(msg, { theme: "dark" });
+    } catch (e) {
       console.log(e.response.data.message);
-      toast.error(e.response.data.message , {theme: "dark" })
+      toast.error(e.response.data.message, { theme: "dark" });
     }
-  }
-
-
-
+  };
 
   return (
-    <div className="main h-screen w-screen bg-[#000000] select-none flex items-center justify-center p-10">
-      <div className=" bg-[#0F0F0F] rounded flex flex-col justify-center items-center p-4">
-        <div className=" logo flex items-center justify-center p-4">
-          <h1 style={{ WebkitTextStroke: "0.5px white" }} className="text-[#162942] text-3xl font-bold">
-            Lex<span style={{ WebkitTextStroke: "0.5px white" }} className="text-[#AE8623] textl-3xl font-semibold">Bridge</span>
+    <div className="main min-h-screen w-full bg-[#000000] select-none flex items-center justify-center p-4 relative overflow-x-hidden">
+      
+      {/* CROSS SIGN - Home par jane ke liye */}
+      <div 
+        onClick={() => navigate("/")} 
+        className="absolute top-5 right-5 text-white text-3xl cursor-pointer z-10 hover:text-gray-400 transition-all"
+      >
+        <i className="ri-close-line"></i>
+      </div>
+
+      <div className="bg-[#0F0F0F] rounded-xl flex flex-col justify-center items-center p-6 w-full max-w-[400px] my-10">
+        
+        {/* LOGO */}
+        <div className="logo flex items-center justify-center mb-6">
+          <h1 style={{ WebkitTextStroke: "0.5px white" }} className="text-[#162942] text-4xl font-bold">
+            Lex <span className="text-[#AE8623] font-semibold">Bridge</span>
           </h1>
         </div>
 
-        <div className="  flex gap-2 flex-col text-center">
-          <h1 className="text-2xl text-white font-semibold ">Welcome Back</h1>
-          <p className="text-l text-[#c7c2c2] font-medium">
-            Login to manage your account
-          </p>
+        {/* WELCOME TEXT */}
+        <div className="flex flex-col gap-1 text-center mb-6">
+          <h1 className="text-2xl text-white font-semibold">Join Us</h1>
+          <p className="text-sm text-[#c7c2c2] font-medium">Create an account to get started</p>
         </div>
 
-        <div className="p-2 flex flex-col gap-4 text-center">
-          <div className="w-100 h-12 bg-[#181A1B] text-white flex gap-4 items-center justify-center rounded cursor-pointer active:scale-98 mt-4">
-            <img
-              className="w-6 h-6"
-              src="../../src/assets/Images/google.png"
-              alt=""
-            />
-            <h1 className="font-normal text-l">Sign in with Google</h1>
+        {/* GOOGLE BUTTON */}
+        <div className="w-full flex flex-col gap-4">
+          <div className="w-full h-12 bg-[#181A1B] text-white flex gap-4 items-center justify-center rounded cursor-pointer active:scale-95 transition-all">
+            <img className="w-5 h-5" src="../../src/assets/Images/google.png" alt="google" />
+            <h1 className="font-normal text-sm">Sign up with Google</h1>
           </div>
-          <div className="flex text-white mt-2">
-            <div className="h-1 w-40">----------------------</div>
-            <p className="pl-3">or</p>
-            <div className="h-1 w-60">----------------------------</div>
+
+          {/* DIVIDER */}
+          <div className="flex items-center gap-2 my-2">
+            <div className="h-[1px] bg-gray-800 flex-1"></div>
+            <p className="text-gray-500 text-xs uppercase font-bold">or</p>
+            <div className="h-[1px] bg-gray-800 flex-1"></div>
           </div>
         </div>
 
-        <div className="text-white flex flex-col gap-4 ">
-          <form className="text-[#444242]" onSubmit={handleOnClick}>
-          <div className="flex flex-col gap-2">
-            <h1 className="text-l font-medium text-white">Email Address</h1>       
+        {/* FORM SECTION */}
+        <div className="text-white w-full">
+          <form className="w-full" onSubmit={handleOnClick}>
+            
+            {/* EMAIL */}
+            <div className="flex flex-col gap-2 mt-4">
+              <h1 className="text-sm font-medium text-white">Email Address</h1>
               <input
-                className="w-100 h-10 bg-[#181A1B] rounded text-[15px] text-white font-medium p-4 shadow-xs shadow-[#5a5656]"
-                type="text"
+                className="w-full h-11 bg-[#181A1B] rounded text-sm text-white font-medium p-3 shadow-sm shadow-[#5a5656] outline-none"
+                type="email"
                 placeholder="johndoe123@gmail.com"
-                onChange={(e)=>setEmail(e.target.value)}
+                onChange={(e) => setEmail(e.target.value)}
+                required
               />
-          </div>
-          <div className="flex flex-col gap-2 mt-2">
-            <h1 className="text-l font-medium text-white">Name</h1>       
+            </div>
+
+            {/* NAME */}
+            <div className="flex flex-col gap-2 mt-4">
+              <h1 className="text-sm font-medium text-white">Full Name</h1>
               <input
-                className="w-100 h-10 bg-[#181A1B] rounded text-[15px] text-white font-medium p-4 shadow-xs shadow-[#5a5656]"
+                className="w-full h-11 bg-[#181A1B] rounded text-sm text-white font-medium p-3 shadow-sm shadow-[#5a5656] outline-none"
                 type="text"
                 placeholder="John Doe"
-                onChange={(e)=>setUserName(e.target.value)}
+                onChange={(e) => setUserName(e.target.value)}
+                required
               />
-          </div>
-          <div className="flex flex-col gap-2 w-100 mt-2">
-              <h1 className="text-l font-semibold text-white">Create Password</h1>
+            </div>
+
+            {/* PASSWORD */}
+            <div className="flex flex-col gap-2 w-full mt-4">
+              <h1 className="text-sm font-semibold text-white">Create Password</h1>
               <input
-                className="w-100 h-10 bg-[#181A1B] rounded text-[15px] text-white font-medium p-4 shadow-xs shadow-[#5a5656]"
-                type="text"
+                className="w-full h-11 bg-[#181A1B] rounded text-sm text-white font-medium p-3 shadow-sm shadow-[#5a5656] outline-none"
+                type="password"
                 placeholder="Create password"
-                onChange={(e)=>setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
+                required
               />
 
-            <button className="px-30 py-2 bg-blue-700 rounded text-white text-l font-semibold mt-4 cursor-pointer ">
-              Create Account
-            </button>
+              {/* REGISTER BUTTON */}
+              <button className="w-full py-3 bg-blue-700 hover:bg-blue-600 transition-colors rounded text-white text-base font-semibold mt-6 cursor-pointer active:scale-95">
+                Create Account
+              </button>
 
-            <h1 className="text-gray-600 font-medium text-l text-center">
+              {/* REDIRECT TO LOGIN */}
+              <h1 className="text-gray-500 font-medium text-sm text-center mt-6">
                 Already have an account?{" "}
-              <span className="text-l font-semibold text-blue-600 cursor-pointer ">
-              <NavLink to="/signin">Login Here</NavLink> 
-              </span>
-            </h1>
-          </div>
+                <NavLink to="/signin" className="text-blue-600 font-semibold hover:underline">
+                  Login Here
+                </NavLink>
+              </h1>
+            </div>
           </form>
-        </div>        
+        </div>
       </div>
     </div>
   );
 };
 
-export default SignIn;
+export default SignUp;
