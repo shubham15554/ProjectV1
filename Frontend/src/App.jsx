@@ -12,7 +12,7 @@ import Loby from './components/videoCall/Loby'
 import MyBookings from './components/MyBookings/MyBookings';
 import 'react-toastify/dist/ReactToastify.css';
 import BookingSummaryCard from './components/BookingSummaryCard/BookingSummaryCard';
-// Create a Mentors page component
+
 const Mentors = () => {
   const mentorsList = [
     {
