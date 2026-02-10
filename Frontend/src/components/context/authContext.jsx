@@ -17,7 +17,7 @@ export const AuthProvider = ({children})=>{
     const handleRegister = async (username , email , password)=>{
         try{ 
             
-            let res = await axios.post("http://localhost:8000/user/signup"  , {username , email , password},  { withCredentials: true });
+            let res = await axios.post("https://projectv1-1.onrender.com/user/signup"  , {username , email , password},  { withCredentials: true });
             
             if(res.data.user){
                 setUser(user);
@@ -35,7 +35,7 @@ export const AuthProvider = ({children})=>{
 
         try{ 
             
-            let res = await axios.post("http://localhost:8000/user/login"  , { email: userEmail , password : userPassword},  { withCredentials: true });
+            let res = await axios.post("https://projectv1-1.onrender.com/user/login"  , { email: userEmail , password : userPassword},  { withCredentials: true });
             
             if(res.data.user){
                 setUser(user);

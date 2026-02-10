@@ -16,7 +16,7 @@ const MyBookings = () => {
   // 2. Fetch data from backend
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/session/myBookings");
+      const res = await axios.get("https://projectv1-1.onrender.com/session/myBookings");
       // Since your backend returns { myBookings: [...] }
       setBookings(res.data.myBookings || []);
     } catch (e) {

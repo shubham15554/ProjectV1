@@ -133,7 +133,7 @@ const BookingModal = ({ isOpen, onClose, mentor, selectedPlan }) => {
     };
 
     try {
-      let res = await axios.post('http://localhost:8000/session/booking', submissionData);
+      let res = await axios.post('https://projectv1-1.onrender.com/session/booking', submissionData);
       toast.success(res.data.message || "Booking Confirmed!", { theme: "dark" });
       onClose();
     } catch (err) {
