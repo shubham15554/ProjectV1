@@ -11,7 +11,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({children})=>{
             
-    let [user , setUser] = useState({});
+    let [user , setUser] = useState(null);
     
 
     const handleRegister = async (username , email , password)=>{
@@ -20,7 +20,7 @@ export const AuthProvider = ({children})=>{
             let res = await axios.post("https://projectv1-1.onrender.com/user/signup"  , {username , email , password},  { withCredentials: true });
             
             if(res.data.user){
-                setUser(user);
+                setUser(res.data.user);
                 return res.data.message;
             }
         }
@@ -38,7 +38,7 @@ export const AuthProvider = ({children})=>{
             let res = await axios.post("https://projectv1-1.onrender.com/user/login"  , { email: userEmail , password : userPassword},  { withCredentials: true });
             
             if(res.data.user){
-                setUser(user);
+                setUser(res.data.user);
                 return res.data.message;
             }
         }
