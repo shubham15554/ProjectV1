@@ -51,7 +51,7 @@ export const AuthProvider = ({children})=>{
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post("/https://projectv1-1.onrender.com/user/logout", {}, { withCredentials: true });
+            const response = await axios.post("https://projectv1-1.onrender.com/user/logout", {}, { withCredentials: true });
             
             if (response.status === 200) {
             // 1. Clear your Global State (Redux, Context, etc.)
