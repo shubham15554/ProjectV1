@@ -1,10 +1,17 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // Menu icons ke liye
-
+import { ImageOff, Menu, X } from "lucide-react"; // Menu icons ke liye
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  let {user , handleLogout} = useContext(AuthContext);
 
+
+  let handleOnClick = async()=>{
+    let res =  await handleLogout();
+    console.log(res);
+  }
   return (
     // Padding p-6 aur height h-25 wahi rakhi hai jo aapne di thi
     <div className="h-25 bg-[#000000] flex items-center justify-between p-6 relative">
@@ -36,7 +43,9 @@ const NavBar = () => {
           to="/mentors"
         >
           Mentors
-        </NavLink><NavLink
+        </NavLink>
+        
+        { user &&  <NavLink
           className={({ isActive }) =>
             `text-l font-semibold ${isActive ? `text-[#0e3e79]` : `text-white`}`
           }
@@ -44,7 +53,7 @@ const NavBar = () => {
         >
           My Bookings
         </NavLink>
-
+        }
         <NavLink
           className={({ isActive }) =>
             `text-l font-semibold ${isActive ? "text-[#0e3e79]" : "text-white"}`
@@ -53,11 +62,17 @@ const NavBar = () => {
         >
           About Us
         </NavLink>
-        <NavLink to="/signin">
+        { !user && <NavLink to="/signin">
           <button className="text-l text-white font-medium bg-[#0e3e79] rounded px-6 py-2 cursor-pointer active:scale-95">
             SignIn
           </button>
-        </NavLink>
+        </NavLink>}
+
+        {user && 
+          <button onClick={handleOnClick}  className="text-l text-white font-medium bg-[#0e3e79] rounded px-6 py-2 cursor-pointer active:scale-95">
+            Logout
+          </button>
+         }
       </div>
 
       {/* Mobile Toggle Button - Sirf mobile par dikhega */}

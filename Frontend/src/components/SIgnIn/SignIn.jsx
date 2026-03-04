@@ -9,12 +9,13 @@ const SignIn = () => {
   let { handleLogin } = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-
+  let Navigate = useNavigate();
   const submitHandler = async (e) => {
     try {
       e.preventDefault();
       let msg = await handleLogin(userEmail, userPassword);
-      toast(msg, { theme: "dark" });
+      toast("user login hua", { theme: "dark" });
+      Navigate('/');
     } catch (e) {
       toast.error(e.response.data.msg, { theme: "dark" });
     }

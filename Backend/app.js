@@ -11,7 +11,8 @@ const server = createServer(app);
 const io = connectToSocket(server);
 import sessionRouter from "./routes/session.js";
 app.use(express.json());
-
+import dns from 'dns';
+dns.setServers(["1.1.1.1", "8.8.8.8"]);
 app.use(cors({
   origin: "http://localhost:5173", // <-- exact frontend URL
   credentials: true               // <-- allow cookies
@@ -24,17 +25,20 @@ app.use("/session" , sessionRouter);
 
 
 
-const start = async ()=>{
+const start = async () => {
+  try {
+    let url = 'mongodb+srv://ry957933_db_user:4IZbQnCnH78h830S@lexbridge.ahjrza9.mongodb.net/?appName=lexbridge';
+    // let url2 = 'mongodb+srv://ry957933_db_user:LicU3ZHMU1UuUByN@cluster0.mcyxplm.mongodb.net/?appName=Cluster0'
+    await mongoose.connect(url);
+    console.log("Database connected");
 
-    server.listen(8000 , ()=>{
-        console.log("server is listening on port: "+8000)
+    server.listen(8000, () => {
+      console.log("Server is listening on port 8000");
     });
-     let url = process.env.MONGO_URL;
-     mongoose.connect(url)
-    .then(()=>console.log("database connected"))
-    .catch((e)=>console.log("database not connected"));
-
-    
-}
+  } catch (e) {
+    console.error("Database not connected:", e);
+    process.exit(1); // Stop server if DB fails
+  }
+};
 
 start();

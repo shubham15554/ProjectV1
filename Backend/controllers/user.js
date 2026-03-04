@@ -89,6 +89,17 @@ export const checkAuth = ("/checkAuth", (req, res) => {
 });
 
 
+export const logout = ("/logout" , (req, res) => {
+  res.cookie("token", "", {
+    httpOnly: true,
+    secure: true, // Use true if using HTTPS
+    sameSite: "strict",
+    expires: new Date(0), // Sets expiration to 1970 (immediate deletion)
+  });
+
+  res.status(200).json({ message: "Logged out successfully" });
+});
+
 
 
 

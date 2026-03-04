@@ -12,13 +12,16 @@ const SignUp = () => {
 
   let {handleRegister } = useContext(AuthContext);
   
+  let Navigate = useNavigate();
   
 
   const handleOnClick = async (e) => {
     try {
       e.preventDefault();
       let msg = await handleRegister(username, email, password);
-      toast(msg, { theme: "dark" });
+      toast("user sign up hua", { theme: "dark" });
+      Navigate('/');
+
     } catch (e) {
       console.log(e.response.data.message);
       toast.error(e.response.data.message, { theme: "dark" });

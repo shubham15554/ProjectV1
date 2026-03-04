@@ -8,6 +8,7 @@ import { checkAuth } from "../controllers/user.js";
 
 router.post("/signup" , signup);
 router.post("/login" , login);
+router.post("/logout" , login);
 router.get('/checkAuth' , checkAuth);
 
 

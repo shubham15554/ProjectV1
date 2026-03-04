@@ -56,13 +56,13 @@ const MyBookings = () => {
    * 4. Check if the meeting is joinable (5 mins before start until 60 mins after)
    */
   const isJoinable = (dateStr, timeStr) => {
-    // const start = parseDateTime(dateStr, timeStr);
-    // if (!start) return false;
+    const start = parseDateTime(dateStr, timeStr);
+    if (!start) return false;
 
-    // const bufferStart = new Date(start.getTime() - 5 * 60000); 
-    // const end = new Date(start.getTime() + 60 * 60000); 
+    const bufferStart = new Date(start.getTime() - 5 * 60000); 
+    const end = new Date(start.getTime() + 60 * 60000); 
     
-    // return now >= bufferStart && now <= end;
+    return now >= bufferStart && now <= end;
     return true;
   };
 
