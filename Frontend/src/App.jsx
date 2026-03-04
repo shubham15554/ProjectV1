@@ -12,7 +12,7 @@ import Loby from './components/videoCall/Loby'
 import MyBookings from './components/MyBookings/MyBookings';
 import 'react-toastify/dist/ReactToastify.css';
 import BookingSummaryCard from './components/BookingSummaryCard/BookingSummaryCard';
-
+import ProtectedRoute from './components/utils/protectedRoute';
 const Mentors = () => {
   const mentorsList = [
     {
@@ -88,12 +88,13 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<Signup />} />
-        <Route path='/:loby' element={<Loby />} />
-        <Route path='/myBookings' element={<MyBookings/>}/>
+        <Route path='/:loby' element={<ProtectedRoute><Loby/></ProtectedRoute>} />
+        <Route path='/myBookings' element={<ProtectedRoute><MyBookings/></ProtectedRoute>  }/>
         </Routes>
       </AuthProvider>
     </div>
   )
 }
+
 
 export default App

@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { ImageOff, Menu, X } from "lucide-react"; // Menu icons ke liye
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
+import { toast } from "react-toastify";
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   let {user , handleLogout} = useContext(AuthContext);
@@ -10,7 +11,9 @@ const NavBar = () => {
 
   let handleOnClick = async()=>{
     let res =  await handleLogout();
+    
     console.log(res);
+    toast(res.data.message , { theme: "dark" });
   }
   return (
     // Padding p-6 aur height h-25 wahi rakhi hai jo aapne di thi

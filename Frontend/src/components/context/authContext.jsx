@@ -2,6 +2,7 @@ import { Children } from "react";
 import { useState } from "react";
 import { createContext } from "react";
 import { useContext } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 
 
@@ -12,7 +13,28 @@ export const AuthContext = createContext({});
 export const AuthProvider = ({children})=>{
             
     let [user , setUser] = useState(null);
-    
+    let [loading, setLoading] = useState(true);
+
+
+    useEffect(() => {
+    const checkUserOnRefresh = async () => {
+      try {
+        // Backend mein ek 'profile' ya 'me' route honi chahiye jo req.cookies check kare
+        const res = await axios.get("https://projectv1-1.onrender.com/user/profile", { withCredentials: true });
+        console.log("use effect vala user" + res);
+        if (res.data.user) {
+          setUser(res.data.user);
+        }
+      } catch (err) {
+        console.log(err);
+        console.log("No active session found" , err);
+        setUser(null);
+      } finally {
+        setLoading(false); // Refresh ka check pura hua, ab loading hatao
+      }
+    };
+    checkUserOnRefresh();
+    }, []);
 
     const handleRegister = async (username , email , password)=>{
         try{ 

@@ -28,8 +28,10 @@ export const signup = async (req , res)=>{
         let token = createSecretToken(user._id);
         console.log(user);
         res.cookie("token", token, {
-            withCredentials: true,
-            httpOnly: false,
+            httpOnly: true,         // Security ke liye best (JS access nahi kar payega)
+            secure: true,           // Render (HTTPS) ke liye mandatory hai
+            sameSite: "none",       // Localhost aur Render ke beech communication ke liye must hai
+            maxAge: 24 * 60 * 60 * 1000, // 1 din ki expiry (Iske bina refresh par gayab hogi)
         });
         res.status(201).json({ message: "User signed in successfully", success: true, user });
 
@@ -60,13 +62,21 @@ export const login = async (req , res)=>{
 
         let token = createSecretToken(user._id);
 
-        if(isPasswordCorrect){
+        if(isPasswordCorrect) {
             res.cookie("token", token, {
-            withCredentials: true,
-            httpOnly: false,
-           });
-           res.status(201).json({ message: "User logged in successfully", success: true, user });
-        }else{
+                httpOnly: true,         // Security ke liye best (JS access nahi kar payega)
+                secure: true,           // Render (HTTPS) ke liye mandatory hai
+                sameSite: "none",       // Localhost aur Render ke beech communication ke liye must hai
+                maxAge: 24 * 60 * 60 * 1000, // 1 din ki expiry (Iske bina refresh par gayab hogi)
+            });
+
+            res.status(201).json({ 
+                message: "User logged in successfully", 
+                success: true, 
+                user 
+            });
+        }
+        else{
             return  res.status(401).json({msg: "Invalid credentials"});
         }
 
@@ -78,15 +88,24 @@ export const login = async (req , res)=>{
 }
 
 
-export const checkAuth = ("/checkAuth", (req, res) => {
+export const profile = ("/profile" , async (req, res) => {
+   try {
+        const token = req.cookies.token; // Cookie se token liya
+        if (!token) return res.status(401).json({ message: "No token" });
 
-  console.log("verify req is coming"+ req.cookies);
-  if (req.cookies?.token) {
-    // optionally verify the token
-    return res.json({ authenticated: true });
-  }
-  res.json({ authenticated: false });
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.id).select("-password");
+        
+        if (!user) return res.status(404).json({ message: "User not found" });
+        
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(401).json({ message: "Invalid token" });
+    }
 });
+
+
+
 
 
 export const logout = ("/logout" , (req, res) => {
