@@ -6,37 +6,37 @@ const About = () => {
 
 const mentorshipFeatures = [
   {
-    image: "../../src/assets/Images/img1.png",
+    image: "/img1.png",
     title: "Strategic Mentorship",
     description:
       "From everyday target setting to understanding concepts, do everything strategically."
   },
   {
-    image: "../../src/assets/Images/img2.png",
+    image: "/img2.png",
     title: "Personal Curriculum",
     description:
       "Get a customized curriculum according to your  preparation needs."
   },
   {
-    image: "../../src/assets/Images/img3.png",
+    image: "/img3.png",
     title: "1-1 Sessions",
     description:
       "One-on-one interaction with NLU mentors with 2+ years of experience."
   },
   {
-    image: "../../src/assets/Images/img4.png",
+    image: "/img4.png",
     title: "Subject1 Doubt Solving",
     description:
       "Get solutions to your Subject1 doubts with your personal mentor."
   },
   {
-    image: "../../src/assets/Images/img1.png",
+    image: "/img1.png",
     title: "Subject2 Doubt Solving",
     description:
       "Your personal mentor will help you with solutions to your Subject1 doubts."
   },
   {
-    image: "../../src/assets/Images/img2.png",
+    image: "/img2.png",
     title: "Subject3 Doubt Solving",
     description:
       "Find solutions to your Subject3 doubts with your personal mentor."

@@ -21,7 +21,7 @@ const NavBar = () => {
       {/* Logo Section - No Changes */}
       <div className="flex items-center justify">
         <NavLink className='flex items-center justify-center' to="/">
-          <img className="h-30 w-30" src="../../src/assets/Images/sellogo.png" alt="Logo" />
+          <img className="h-30 w-30" src="/sellogo.png" alt="Logo" />
           <h1 className="text-[#031b38] text-3xl font-bold">
             Lex<span className="text-[#dbaa2f] text-3xl font-semibold">Bridge</span>
           </h1>

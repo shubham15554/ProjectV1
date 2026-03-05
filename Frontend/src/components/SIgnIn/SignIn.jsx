@@ -50,7 +50,7 @@ const SignIn = () => {
         {/* Google Login Button */}
         <div className="w-full flex flex-col gap-4">
           <div className="w-full h-12 bg-[#181A1B] text-white flex gap-4 items-center justify-center rounded cursor-pointer active:scale-95 shadow-sm">
-            <img className="w-5 h-5" src="../../src/assets/Images/google.png" alt="" />
+            <img className="w-5 h-5" src="/google.png" alt="" />
             <h1 className="font-normal text-sm">Sign in with Google</h1>
           </div>
 
