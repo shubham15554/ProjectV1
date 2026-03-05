@@ -93,7 +93,7 @@ export const profile = ("/profile" , async (req, res) => {
         const token = req.cookies.token; // Cookie se token liya
         if (!token) return res.status(401).json({ message: "No token" });
 
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.TOKEN_KEY);
         const user = await User.findById(decoded.id).select("-password");
         
         if (!user) return res.status(404).json({ message: "User not found" });

@@ -11,7 +11,6 @@ const NavBar = () => {
 
   let handleOnClick = async()=>{
     let res =  await handleLogout();
-    
     console.log(res);
     toast(res.data.message , { theme: "dark" });
   }

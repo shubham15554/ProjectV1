@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Clock, Calendar, Video, AlertCircle } from "lucide-react";
 import NavBar from '../NavBar/NavBar'
+import { AuthContext } from "../context/authContext";
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [now, setNow] = useState(new Date());
-
+  let {user } = useContext(AuthContext)
   // 1. Update current time every minute to refresh "Join" button status
   useEffect(() => {
+    console.log(user);
     const timer = setInterval(() => setNow(new Date()), 60000);
     return () => clearInterval(timer);
+    
   }, []);
 
   // 2. Fetch data from backend
   const fetchBookings = async () => {
     try {
-      const res = await axios.get("https://projectv1-1.onrender.com/session/myBookings");
-      // Since your backend returns { myBookings: [...] }
+      const res = await axios.get("https://projectv1-1.onrender.com/session/myBookings",{
+      withCredentials: true
+    });
+      console.log("bookings ...........");
+      console.log(res);
       setBookings(res.data.myBookings || []);
     } catch (e) {
       console.error("Fetch error:", e);

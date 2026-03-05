@@ -21,7 +21,7 @@ export const AuthProvider = ({children})=>{
       try {
         // Backend mein ek 'profile' ya 'me' route honi chahiye jo req.cookies check kare
         const res = await axios.get("https://projectv1-1.onrender.com/user/profile", { withCredentials: true });
-        console.log("use effect vala user" + res);
+        console.log(res);
         if (res.data.user) {
           setUser(res.data.user);
         }
@@ -84,9 +84,20 @@ export const AuthProvider = ({children})=>{
             console.error("Logout failed", error);
         }
     };
+
+
+
      
     let data = {handleRegister ,handleLogin, handleLogout, user};
-
+      
+     if (loading) {
+      // Jab tak backend check kar raha hai, tab tak ye dikhao
+        return (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <h2>Loading your profile...</h2> 
+        </div>
+        );
+      }
 
       return (
         <AuthContext.Provider value={data}>

@@ -34,7 +34,7 @@ const HomePage = () => {
   <div className="hidden lg:block h-full w-[48%] relative overflow-hidden">
     <img
       className="h-full w-full object-cover object-[center_18%]"
-      src="../../src/assets/Images/homeImage.png"
+      src="/homeImage.png"
       alt="Hero"
     />
   </div>
