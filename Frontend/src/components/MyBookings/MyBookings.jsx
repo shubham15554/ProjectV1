@@ -143,7 +143,7 @@ const MyBookings = () => {
                 <div className="flex items-center w-full md:w-auto">
                   {joinActive ? (
                     <button 
-                      onClick={() => window.open(b.meetingLink || "https://meet.google.com", "_blank")}
+                      onClick={() => Navigate(b.meetingLink)}
                       className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-lg shadow-blue-900/20 transition-transform active:scale-95"
                     >
                       <Video className="w-5 h-5" />
