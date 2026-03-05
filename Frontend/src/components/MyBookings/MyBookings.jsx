@@ -3,11 +3,13 @@ import axios from "axios";
 import { Clock, Calendar, Video, AlertCircle } from "lucide-react";
 import NavBar from '../NavBar/NavBar'
 import { AuthContext } from "../context/authContext";
+import { useNavigate } from "react-router-dom";
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [now, setNow] = useState(new Date());
-  let {user } = useContext(AuthContext)
+  let {user } = useContext(AuthContext);
+  let Navigate= useNavigate();
   // 1. Update current time every minute to refresh "Join" button status
   useEffect(() => {
     console.log(user);
