@@ -81,7 +81,7 @@ const MyBookings = () => {
   }
 
   return (
-    <div className="h-screen w-full bg-black">
+    <div className="">
     <NavBar/>
     <div className="max-w-4xl mx-auto p-6 space-y-6 ">
       <div className="flex items-center justify-between">

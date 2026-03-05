@@ -88,8 +88,8 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<Signup />} />
-        <Route path='/:loby' element={<ProtectedRoute><Loby/></ProtectedRoute>} />
         <Route path='/myBookings' element={<ProtectedRoute><MyBookings/></ProtectedRoute>  }/>
+        <Route path='/:loby' element={<ProtectedRoute><Loby/></ProtectedRoute>} />
         </Routes>
       </AuthProvider>
     </div>
