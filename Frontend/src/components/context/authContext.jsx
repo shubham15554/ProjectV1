@@ -53,12 +53,11 @@ export const AuthProvider = ({children})=>{
     }
 
 
-    const handleLogin = async (userEmail , userPassword)=>{
+    const handleLogin = async (userEmail , userPassword , userRole)=>{
 
         try{ 
             
-            let res = await axios.post("https://projectv1-1.onrender.com/user/login"  , { email: userEmail , password : userPassword},  { withCredentials: true });
-            
+            let res = await axios.post("https://projectv1-1.onrender.com/user/login"  , { email: userEmail , password : userPassword , role : userRole},  { withCredentials: true });
             if(res.data.user){
                 setUser(res.data.user);
                 return res.data.message;

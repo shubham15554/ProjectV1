@@ -9,23 +9,23 @@ const SignIn = () => {
   let { handleLogin } = useContext(AuthContext);
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  let Navigate = useNavigate();
+  const [role, setRole] = useState("user"); // New role state
+
   const submitHandler = async (e) => {
     try {
       e.preventDefault();
-      let msg = await handleLogin(userEmail, userPassword);
-      toast("user login hua", { theme: "dark" });
-      Navigate('/');
+      // handleLogin mein role bhi pass kar rahe hain
+      await handleLogin(userEmail, userPassword, role); 
+      toast.success(`${role === 'mentor' ? 'Mentor' : 'User'} login hua`, { theme: "dark" });
+      navigate('/');
     } catch (e) {
-      toast.error(e.response.data.msg, { theme: "dark" });
+      toast.error(e.response?.data?.msg || "Login failed", { theme: "dark" });
     }
   };
 
   return (
-    // h-screen ki jagah min-h-screen taaki mobile par overflow na ho
     <div className="main min-h-screen w-full bg-[#000000] select-none flex items-center justify-center p-4 relative overflow-x-hidden">
       
-      {/* CROSS SIGN */}
       <div 
         onClick={() => navigate("/")} 
         className="absolute top-5 right-5 text-white text-3xl cursor-pointer z-10"
@@ -33,8 +33,8 @@ const SignIn = () => {
         <i className="ri-close-line"></i>
       </div>
 
-      {/* Main Card: w-100 hata kar w-full aur max-w-sm kiya */}
-      <div className="bg-[#0F0F0F] rounded-xl flex flex-col justify-center items-center p-6 w-full max-w-[400px] my-10">
+      {/* Main Card */}
+      <div className="bg-[#0F0F0F] rounded-xl flex flex-col justify-center items-center p-6 w-full max-w-[400px] my-10 border border-gray-900">
         
         <div className="logo flex items-center justify-center mb-6">
           <h1 style={{ WebkitTextStroke: "0.5px white" }} className="text-[#162942] text-4xl font-bold">
@@ -62,35 +62,53 @@ const SignIn = () => {
           </div>
         </div>
 
+        {/* --- ROLE SELECTION BOX --- */}
+        <div className="flex w-full bg-[#181A1B] p-1 rounded-lg mb-4 border border-gray-800">
+          <button 
+            onClick={() => setRole("user")}
+            className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${role === "user" ? "bg-blue-700 text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
+          >
+            <i className="ri-user-line mr-2"></i>User
+          </button>
+          <button 
+            onClick={() => setRole("mentor")}
+            className={`flex-1 py-2 text-sm font-semibold rounded-md transition-all ${role === "mentor" ? "bg-[#AE8623] text-white shadow-lg" : "text-gray-400 hover:text-white"}`}
+          >
+            <i className="ri-shield-user-line mr-2"></i>Mentor
+          </button>
+        </div>
+
         {/* Form Section */}
         <div className="text-white w-full">
           <form onSubmit={submitHandler} className="w-full">
-            <div className="flex flex-col gap-2 mt-4">
+            <div className="flex flex-col gap-2">
               <h1 className="text-sm font-medium text-white">Email Address</h1>
               <input
                 onChange={(dets) => setUserEmail(dets.target.value)}
-                className="w-full h-11 rounded text-sm text-white font-medium p-3 bg-[#181A1B] shadow-sm shadow-[#5a5656] outline-none"
+                className="w-full h-11 rounded text-sm text-white font-medium p-3 bg-[#181A1B] shadow-sm shadow-[#5a5656] outline-none border border-transparent focus:border-gray-600"
                 type="email"
                 placeholder="johndoe123@gmail.com"
                 value={userEmail}
+                required
               />
             </div>
 
             <div className="flex flex-col gap-2 w-full mt-4">
               <div className="flex items-center justify-between">
                 <h1 className="text-sm font-semibold text-white">Password</h1>
-                <h1 className="text-xs font-semibold text-blue-600 cursor-pointer">Forgot?</h1>
+                <h1 className="text-xs font-semibold text-blue-600 cursor-pointer hover:underline">Forgot?</h1>
               </div>
               <input
                 onChange={(dets) => setUserPassword(dets.target.value)}
-                className="w-full h-11 rounded text-sm text-white font-medium p-3 bg-[#181A1B] shadow-sm shadow-[#5a5656] outline-none"
+                className="w-full h-11 rounded text-sm text-white font-medium p-3 bg-[#181A1B] shadow-sm shadow-[#5a5656] outline-none border border-transparent focus:border-gray-600"
                 type="password"
                 placeholder="Enter password"
                 value={userPassword}
+                required
               />
 
-              <button className="w-full py-3 bg-blue-700 rounded text-white text-base font-semibold mt-6 cursor-pointer active:scale-95 shadow-lg shadow-blue-900/20">
-                Login
+              <button className={`w-full py-3 rounded text-white text-base font-semibold mt-6 cursor-pointer active:scale-95 shadow-lg transition-colors ${role === 'user' ? 'bg-blue-700 hover:bg-blue-800' : 'bg-[#AE8623] hover:bg-[#8e6d1c]'}`}>
+                Login as {role === 'user' ? 'User' : 'Mentor'}
               </button>
 
               <h1 className="text-gray-500 font-medium text-sm text-center mt-6">

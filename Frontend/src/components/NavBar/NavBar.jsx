@@ -47,13 +47,22 @@ const NavBar = () => {
           Mentors
         </NavLink>
         
-        { user &&  <NavLink
+        { user && user.role == "user" &&  <NavLink
           className={({ isActive }) =>
             `text-l font-semibold ${isActive ? `text-[#0e3e79]` : `text-white`}`
           }
           to="/myBookings"
         >
           My Bookings
+        </NavLink>
+        }
+        {user && user.role == "mentor" &&  <NavLink
+          className={({ isActive }) =>
+            `text-l font-semibold ${isActive ? `text-[#0e3e79]` : `text-white`}`
+          }
+          to="/myBookings"
+        >
+          Manage Bookings
         </NavLink>
         }
         <NavLink
@@ -89,10 +98,15 @@ const NavBar = () => {
         <div className="absolute top-full left-0 w-full bg-[#000000] flex flex-col items-center gap-4 py-6 z-50 md:hidden border-t border-gray-800">
           <NavLink onClick={() => setIsOpen(false)} className="text-white text-lg" to="/">Home</NavLink>
           <NavLink onClick={() => setIsOpen(false)} className="text-white text-lg" to="/mentors">Mentors</NavLink>
+          {user && user.role === "user" && <NavLink onClick={() => setIsOpen(false)} className="text-white text-lg" to="/myBookings">My Bookings</NavLink>}
+          {user && user.role === "mentor" && <NavLink onClick={() => setIsOpen(false)} className="text-white text-lg" to="/myBookings">Manage Bookings</NavLink>}
           <NavLink onClick={() => setIsOpen(false)} className="text-white text-lg" to="/about">About Us</NavLink>
-          <NavLink onClick={() => setIsOpen(false)} to="/signin">
+          { !user && <NavLink onClick={() => setIsOpen(false)} to="/signin">
             <button className="text-white bg-[#0e3e79] rounded px-8 py-2">SignIn</button>
-          </NavLink>
+          </NavLink>}
+          {user && <NavLink onClick={() => setIsOpen(false)} to="/signin">
+            <button className="text-white bg-[#0e3e79] rounded px-8 py-2">Logout</button>
+          </NavLink>}
         </div>
       )}
     </div>

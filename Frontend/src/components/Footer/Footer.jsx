@@ -12,7 +12,7 @@ const Footer = () => {
           <NavLink className="flex items-center justify-center" to="/">
             <img
               className="h-20 w-20 md:h-30 md:w-30" // Mobile par thoda chota kiya
-              src="../../src/assets/Images/sellogo.png"
+              src="/sellogo.png"
               alt="Logo"
             />
             <h1 className="text-[#031b38] text-2xl md:text-3xl font-bold">
