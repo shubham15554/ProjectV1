@@ -76,16 +76,16 @@ const ManageBookings = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
+        <div className="fixed inset-0 z-50 flex justify-center items-center bg-black/80 backdrop-blur-sm">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
     );
   }
 
   return (
-    <div className="">
+    <div className="bg-[#050505] min-h-screen"> {/* Yahan background dark kiya hai */}
     <NavBar/>
-    <div className="max-w-4xl mx-auto p-6 space-y-6 ">
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-bold text-white">My Bookings</h2>
         <span className="text-sm text-gray-500 bg-gray-900 px-3 py-1 rounded-full border border-gray-800">
@@ -123,7 +123,6 @@ const ManageBookings = () => {
                   <div className="flex flex-wrap gap-5">
                     <div className="flex items-center gap-2 text-gray-400 text-sm">
                       <Calendar className="w-4 h-4 text-blue-500" />
-                      {/* Displays date string as "Feb 10, 2026" */}
                       <span className="font-medium">
                         {b.date ? new Date(b.date).toLocaleDateString(undefined, { dateStyle: 'medium' }) : "N/A"}
                       </span>
@@ -166,7 +165,7 @@ const ManageBookings = () => {
         </div>
       )}
     </div>
-    </div>
+</div>
   );
 };
 
