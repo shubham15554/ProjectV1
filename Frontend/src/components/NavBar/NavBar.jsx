@@ -60,7 +60,7 @@ const NavBar = () => {
           className={({ isActive }) =>
             `text-l font-semibold ${isActive ? `text-[#0e3e79]` : `text-white`}`
           }
-          to="/myBookings"
+          to="/manageBookings"
         >
           Manage Bookings
         </NavLink>

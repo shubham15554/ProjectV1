@@ -21,7 +21,6 @@ export const AuthProvider = ({children})=>{
       try {
         // Backend mein ek 'profile' ya 'me' route honi chahiye jo req.cookies check kare
         const res = await axios.get("https://projectv1-1.onrender.com/user/profile", { withCredentials: true });
-        console.log(res);
         if (res.data.user) {
           setUser(res.data.user);
         }

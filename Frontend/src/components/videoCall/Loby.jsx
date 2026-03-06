@@ -13,7 +13,7 @@ function Loby() {
     let connectionRef = useRef();
     let socketIdRef = useRef();
 
-    const server_url = 'http://localhost:8000';
+    const server_url = 'https://projectv1-1.onrender.com';
 
     const peerConfigConnections = {
         'iceServers': [
