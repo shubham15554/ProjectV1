@@ -168,7 +168,7 @@ function Loby() {
                 {/* --- RED HANG UP BUTTON --- */}
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
                     <button 
-                        onClick={handleHangUp}
+                       
                         className="bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center"
                         title="End Call"
                     >
