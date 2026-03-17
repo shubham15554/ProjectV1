@@ -19,7 +19,7 @@ const SignUp = () => {
     try {
       e.preventDefault();
       let msg = await handleRegister(username, email, password);
-      toast("user sign up hua", { theme: "dark" });
+      toast("user signed up successfully", { theme: "dark" });
       Navigate('/');
 
     } catch (e) {

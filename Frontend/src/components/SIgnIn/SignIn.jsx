@@ -16,7 +16,7 @@ const SignIn = () => {
       e.preventDefault();
       // handleLogin mein role bhi pass kar rahe hain
       await handleLogin(userEmail, userPassword, role); 
-      toast.success(`${role === 'mentor' ? 'Mentor' : 'User'} login hua`, { theme: "dark" });
+      toast.success(`${role === 'mentor' ? 'Mentor' : 'User'} logged in successfully`, { theme: "dark" });
       navigate('/');
     } catch (e) {
       toast.error(e.response?.data?.msg || "Login failed", { theme: "dark" });
