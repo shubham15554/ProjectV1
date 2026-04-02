@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 
+
+
+import { IconButton, Stack, Tooltip } from '@mui/material';
+import { CallEnd, Mic, MicOff, Videocam, VideocamOff, ScreenShare } from '@mui/icons-material';
+import { useNavigate } from "react-router-dom";
+
+import { useContext } from "react";
+import {SocketContext} from "../context/socketContext";
+
+
 function Loby() {
     let [username, setUsername] = useState("");
     let [askUsername, setAskUsername] = useState(true);
@@ -8,11 +18,15 @@ function Loby() {
     let [audioAvailble, setAudioAvailble] = useState(true);
     let [ConnectionVideo, SetconnectionVideo] = useState(null);
 
-    let socketRef = useRef();
+    let [micOn, setMicOn] = useState(true);
+    let [cameraOn, setCameraOn] = useState(true)
+
     let localVideoRef = useRef();
     let connectionRef = useRef();
     let socketIdRef = useRef();
 
+    let Navigate = useNavigate();
+    let {socketRef} = useContext(SocketContext); 
     const server_url = 'https://projectv1-1.onrender.com';
 
     const peerConfigConnections = {
@@ -56,7 +70,6 @@ function Loby() {
             });
         };
 
-        // Add local tracks to the connection
         if (window.localStream) {
             window.localStream.getTracks().forEach(track => {
                 pc.addTrack(track, window.localStream);
@@ -96,11 +109,11 @@ function Loby() {
 
     // Keep function name same: Logic updated for 1-to-1 handshake
     const connectToServer = () => {
-        socketRef.current = io.connect(server_url, { secure: false });
+       // socketRef.current = io.connect(server_url, { secure: false });
 
         socketRef.current.on('signal', gotMessageFromServer);
 
-        socketRef.current.on('connect', () => {
+       // socketRef.current.on('connect', () => {
 
             socketRef.current.emit('join-call', window.location.href);
             socketIdRef.current = socketRef.current.id;
@@ -118,9 +131,10 @@ function Loby() {
                     connectionRef.current.close();
                     connectionRef.current = null;
                     SetconnectionVideo(null);
+
                 }
             });
-        });
+       
     };
 
     const getMedia = () => {
@@ -135,6 +149,97 @@ function Loby() {
     useEffect(() => {
         getPermission();
     }, []);
+
+    const toggleMic = () => {
+        if (window.localStream) {
+            const audioTrack = window.localStream.getAudioTracks()[0];
+            if (audioTrack) {
+                audioTrack.enabled = !audioTrack.enabled;
+                setMicOn(audioTrack.enabled);
+            }
+        }
+    };
+
+    const toggleCamera = () => {
+        if (window.localStream) {
+            const videoTrack = window.localStream.getVideoTracks()[0];
+            if (videoTrack) {
+                videoTrack.enabled = !videoTrack.enabled;
+                setCameraOn(videoTrack.enabled);
+            }
+        }
+    };
+
+    const handleHangUp = () => {
+        if (connectionRef.current) connectionRef.current.close();
+        if (window.localStream) {
+            window.localStream.getTracks().forEach(track => track.stop());
+        }
+        if (socketRef.current) {
+        socketRef.current.emit('leave-call'); 
+        }
+        Navigate("/"); // Sabse clean reset
+    };
+
+
+const ControlBar = () => (
+  <Stack 
+    direction="row" 
+    spacing={2} 
+    sx={{ 
+      position: 'absolute', 
+      bottom: 30, 
+      left: '50%', 
+      transform: 'translateX(-50%)',
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      padding: '10px 20px',
+      borderRadius: '50px',
+      backdropFilter: 'blur(10px)',
+      zIndex: 100
+    }}
+  >
+    {/* Mic Button */}
+    <Tooltip title={micOn ? "Mute Mic" : "Unmute Mic"}>
+      <IconButton 
+         onClick={toggleMic} 
+        sx={{ color: 'white', bgcolor: micOn ? 'transparent' : '#f44336' }}
+      >
+        {micOn ? <Mic /> : <MicOff />}
+      </IconButton>
+    </Tooltip>
+
+    {/* Hang Up Button */}
+    <Tooltip title="End Call">
+      <IconButton 
+        onClick={handleHangUp} 
+        sx={{ 
+          color: 'white', 
+          bgcolor: '#f44336', 
+          '&:hover': { bgcolor: '#d32f2f' },
+          width: '56px',
+          height: '56px'
+        }}
+      >
+                <CallEnd />
+            </IconButton>
+    </Tooltip>
+
+    {/* Video Button */}
+    <Tooltip title={cameraOn ? "Turn Off Video" : "Turn On Video"}>
+      <IconButton 
+        onClick={toggleCamera} 
+        sx={{ color: 'white', bgcolor: cameraOn ? 'transparent' : '#f44336' }}
+      >
+        {cameraOn ? <Videocam /> : <VideocamOff />}
+      </IconButton>
+    </Tooltip>
+
+    
+        </Stack>
+     );
+
+
+
 
     return (
     <div className="min-h-screen bg-black text-white p-5 flex flex-col items-center">
@@ -151,7 +256,7 @@ function Loby() {
                 <button className='bg-blue-600 hover:bg-blue-700 py-2 rounded font-bold transition' onClick={connect}>Connect</button>
             </div>
         ) : (
-            <div className="relative w-full h-[80vh] bg-gray-900 rounded-xl overflow-hidden shadow-2xl border border-gray-800">
+            <div className="relative w-full h-[95vh] bg-gray-900 rounded-xl overflow-hidden shadow-2xl border border-gray-800">
                 {/* Remote Video (The other person) */}
                 {ConnectionVideo ? (
                     <video
@@ -165,20 +270,7 @@ function Loby() {
                     </div>
                 )}
 
-                {/* --- RED HANG UP BUTTON --- */}
-                <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
-                    <button 
-                       
-                        className="bg-red-600 hover:bg-red-700 text-white p-4 rounded-full shadow-lg transition-all transform hover:scale-110 active:scale-95 flex items-center justify-center"
-                        title="End Call"
-                    >
-                        {/* Phone icon using SVG (Alternative to Lucide) */}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M10.68 13.31a16 16 0 0 0 3.41 2.6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7 2 2 0 0 1 1.72 2v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67m-2.67-3.34a19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91"></path>
-                            <line x1="23" y1="1" x2="1" y2="23"></line>
-                        </svg>
-                    </button>
-                </div>
+                <ControlBar />
 
                 {/* Local Self View */}
                 <div className="absolute bottom-4 right-4 w-32 md:w-48 border-2 border-blue-500 rounded-lg overflow-hidden bg-black shadow-2xl z-20">

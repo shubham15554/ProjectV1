@@ -13,7 +13,6 @@ import sessionRouter from "./routes/session.js";
 app.use(express.json());
 import dns from 'dns';
 import User from "./models/user.js";
-import User from "./models/user.js";
 dns.setServers(["1.1.1.1", "8.8.8.8"]);
 app.use(cors({
   origin: "http://localhost:5174", // <-- exact frontend URL

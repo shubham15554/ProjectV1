@@ -15,6 +15,8 @@ import BookingSummaryCard from './components/BookingSummaryCard/BookingSummaryCa
 import ProtectedRoute from './components/utils/protectedRoute';
 import axios from 'axios';
 import ManageBookings from './components/manageBookins/ManageBookings';
+import Chat from './components/Chat/Chat';
+import { SocketProvider } from './components/context/socketContext';
 const Mentors = () => {
 
    let [mentorsList , setMentorsList] = useState([]);
@@ -103,6 +105,7 @@ const App = () => {
   return (
     <div>
       <AuthProvider>
+      <SocketProvider>
       <ToastContainer/>
       <Routes>
         <Route path='/' element={<HomePage />} />
@@ -112,8 +115,10 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/myBookings' element={<ProtectedRoute><MyBookings/></ProtectedRoute>  }/>
         <Route path='/manageBookings' element={<ProtectedRoute><ManageBookings/></ProtectedRoute>  }/>
-        <Route path='/:loby' element={<ProtectedRoute><Loby/></ProtectedRoute>} />
+        <Route path='/chat/:roomId' element={<ProtectedRoute><Chat/></ProtectedRoute>} />
+        <Route path='/video/:loby' element={<ProtectedRoute><Loby/></ProtectedRoute>} />
         </Routes>
+        </SocketProvider>
       </AuthProvider>
     </div>
   )

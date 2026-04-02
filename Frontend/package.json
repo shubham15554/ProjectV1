@@ -11,6 +11,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.9",
+    "@mui/material": "^7.3.9",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
     "lucide-react": "^0.563.0",
@@ -20,7 +24,8 @@
     "react-toastify": "^11.0.5",
     "remixicon": "^4.8.0",
     "socket.io-client": "^4.8.3",
-    "tailwindcss": "^4.1.18"
+    "tailwindcss": "^4.1.18",
+    "uuid": "^13.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.33.0",
