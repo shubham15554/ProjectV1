@@ -8,7 +8,7 @@ export const SocketProvider = ({ children }) => {
     const socketRef = useRef();
    let [isconnected, setIsConnected] = useState(false);
     useEffect(() => {
-        socketRef.current = io("https://project-v1-338y.vercel.app", {
+        socketRef.current = io("https://projectv1-1.onrender.com", {
             transports: ["websocket"], // Recommended for Render.com
         });
 
