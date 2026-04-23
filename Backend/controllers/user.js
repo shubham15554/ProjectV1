@@ -2,6 +2,9 @@
 import User from "../models/user.js";
 import { createSecretToken } from "../utils/createToken.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+
 
 export const signup = async (req , res)=>{
    try{
@@ -28,10 +31,10 @@ export const signup = async (req , res)=>{
         let token = createSecretToken(user._id);
         console.log(user);
         res.cookie("token", token, {
-            httpOnly: true,         // Security ke liye best (JS access nahi kar payega)
-            secure: true,           // Render (HTTPS) ke liye mandatory hai
-            sameSite: "none",       // Localhost aur Render ke beech communication ke liye must hai
-            maxAge: 24 * 60 * 60 * 1000, // 1 din ki expiry (Iske bina refresh par gayab hogi)
+                httpOnly: true,         
+                secure: true,           
+                sameSite: "none",       
+                maxAge: 24 * 60 * 60 * 1000, 
         });
         res.status(201).json({ message: "User signed in successfully", success: true, user });
 
@@ -48,7 +51,7 @@ export const login = async (req , res)=>{
 
     try{
 
-        const {email , password} = req.body;
+        const {email , password , role} = req.body;
         if(!email || !password){
             return res.status(400).json({ message: "All fields are required" });
         }
@@ -57,6 +60,10 @@ export const login = async (req , res)=>{
         if(!user){
             return res.status(404).json({msg: "User not found"});
         }
+
+        if(user.role != role){
+           return res.status(400).json({ message: `You can not login as ${role}` });
+        }
         const isPasswordCorrect = await bcrypt.compare(password , user.password);
 
 
@@ -64,10 +71,10 @@ export const login = async (req , res)=>{
 
         if(isPasswordCorrect) {
             res.cookie("token", token, {
-                httpOnly: true,         // Security ke liye best (JS access nahi kar payega)
-                secure: true,           // Render (HTTPS) ke liye mandatory hai
-                sameSite: "none",       // Localhost aur Render ke beech communication ke liye must hai
-                maxAge: 24 * 60 * 60 * 1000, // 1 din ki expiry (Iske bina refresh par gayab hogi)
+                httpOnly: true,         
+                secure: true,           
+                sameSite: "none",       
+                maxAge: 24 * 60 * 60 * 1000, 
             });
 
             res.status(201).json({ 
@@ -87,37 +94,43 @@ export const login = async (req , res)=>{
     }
 }
 
-
-export const profile = ("/profile" , async (req, res) => {
-   try {
-        const token = req.cookies.token; // Cookie se token liya
-        if (!token) return res.status(401).json({ message: "No token" });
-
-        const decoded = jwt.verify(token, process.env.TOKEN_KEY);
-        const user = await User.findById(decoded.id).select("-password");
-        
-        if (!user) return res.status(404).json({ message: "User not found" });
-        
-        res.status(200).json({ user });
-    } catch (error) {
-        res.status(401).json({ message: "Invalid token" });
-    }
-});
+export const profile = async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.status(401).json({ message: "No token found in cookies" });
 
 
+    const decoded = jwt.verify(token, process.env.TOKEN_KEY);
+    console.log("Decoded Payload:", decoded);
+
+    const user = await User.findById(decoded.id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found in DB" });
+
+    res.status(200).json({ user });
+  } catch (error) {
+   
+    console.log("JWT VERIFY ERROR:", error.message); 
+    res.status(401).json({ 
+      message: "Invalid token", 
+      reason: error.message // Frontend ko bhi reason bhejein check karne ke liye
+    });
+  }
+};
 
 
 
-export const logout = ("/logout" , (req, res) => {
+
+
+export const logout = (req, res) => {
   res.cookie("token", "", {
     httpOnly: true,
-    secure: true, // Use true if using HTTPS
-    sameSite: "strict",
-    expires: new Date(0), // Sets expiration to 1970 (immediate deletion)
+    secure: true,
+    sameSite: "none",
+    expires: new Date(0), 
   });
 
   res.status(200).json({ message: "Logged out successfully" });
-});
+};
 
 
 

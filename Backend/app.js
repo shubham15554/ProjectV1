@@ -5,43 +5,50 @@ import {createServer} from "node:http";
 import { connectToSocket } from "./controllers/socketManager.js";
 import  cors  from "cors";
 import mongoose, { mongo } from "mongoose";
-import userRouter from "./routes/user.js"
+import cookieParser from "cookie-parser"; // 1. Import
+import userRouter from "./routes/user.js";
+
+import User from "./models/user.js";
+import { createSecretToken } from "./utils/createToken.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+
 const app = express();
 const server = createServer(app);
 const io = connectToSocket(server);
-import sessionRouter from "./routes/session.js";
+app.use(cookieParser()); 
 app.use(express.json());
-import dns from 'dns';
-import User from "./models/user.js";
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+import sessionRouter from "./routes/session.js";
+import mentorRouter from "./routes/mentor.js";
+
 app.use(cors({
-  origin: "http://localhost:5174", // <-- exact frontend URL
-  credentials: true               // <-- allow cookies
+  origin: ['http://localhost:5174' , 'https://project-v1-338y.vercel.app'], 
+  credentials: true               
 }));
 
+
+// import dns from 'dns';
+// dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 
 app.use("/user" , userRouter);
 app.use("/session" , sessionRouter);
+app.use("/mentor" , mentorRouter);
 
 
 
-// change
+const start = async ()=>{
 
-const start = async () => {
-  try {
-    let url = 'mongodb+srv://ry957933_db_user:4IZbQnCnH78h830S@lexbridge.ahjrza9.mongodb.net/?appName=lexbridge';
-    
-    await mongoose.connect(url);
-    console.log("Database connected");
-
-    server.listen(8000, () => {
-      console.log("Server is listening on port 8000");
+    server.listen(8000 , ()=>{
+        console.log("server is listening on port: "+8000)
     });
-  } catch (e) {
-    console.error("Database not connected:", e);
-    process.exit(1); // Stop server if DB fails
-  }
-};
+    let url = 'mongodb+srv://ry957933_db_user:4IZbQnCnH78h830S@lexbridge.ahjrza9.mongodb.net/?appName=lexbridge';
+     mongoose.connect(url)
+    .then(()=>console.log("database connected"))
+    .catch((e)=>console.log("database not connected"));
+
+    
+}
 
 start();

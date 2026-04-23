@@ -14,6 +14,10 @@ const sessionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  mentorId : {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  },
   // Plan details (chat vs video)
   planType: {
     type: String,
