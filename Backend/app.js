@@ -26,12 +26,12 @@ app.use("/session" , sessionRouter);
 
 
 
-
+// change
 
 const start = async () => {
   try {
     let url = 'mongodb+srv://ry957933_db_user:4IZbQnCnH78h830S@lexbridge.ahjrza9.mongodb.net/?appName=lexbridge';
-    // let url2 = 'mongodb+srv://ry957933_db_user:LicU3ZHMU1UuUByN@cluster0.mcyxplm.mongodb.net/?appName=Cluster0'
+    
     await mongoose.connect(url);
     console.log("Database connected");
 
