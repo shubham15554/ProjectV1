@@ -12,7 +12,7 @@ import User from "./models/user.js";
 import { createSecretToken } from "./utils/createToken.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
+import Session from "./models/session.js";
 
 const app = express();
 const server = createServer(app);
@@ -26,6 +26,9 @@ app.use(cors({
   origin: ['http://localhost:5174' , 'https://project-v1-338y.vercel.app'], 
   credentials: true               
 }));
+
+
+
 
 
 // import dns from 'dns';
